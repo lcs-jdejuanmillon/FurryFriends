@@ -14,8 +14,6 @@ struct AnimalView: View {
     @State var favourites: [Favourite] = []
     // Address for main image
     // Starts as a transparent pixel – until an address for an animal's image is set
-    @State var currentImage = URL(string: "https://www.russellgordon.ca/lcs/miscellaneous/transparent-pixel.png")!
-    
     // MARK: Computed properties
     var savedFavouritesLabel: String {
         if animal {
@@ -33,12 +31,10 @@ struct AnimalView: View {
         ScrollView {
             VStack {
                 // RemoteImageView(fromURL: currentImage)
-                ZStack {
-                    DogImageView()
-                        .opacity(animal ? 1 : 0)
-                    CatImageView()
-                        .opacity(animal ? 0 : 1)
-                }
+                AnimalImageView(animal: animal)
+                    .onTapGesture {
+                        print(error)
+                    }
                 HStack {
                     Button(action: {
                         print("Hola")

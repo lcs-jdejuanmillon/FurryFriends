@@ -7,31 +7,34 @@
 
 import SwiftUI
 
-struct DogImageView: View {
+struct AnimalImageView: View {
     
     // MARK: Stored properties
-    let url = URL(string: "https://dog.ceo/api/breeds/image/random")!
-    @State var dog: dogJSON = dogJSON(message: "https://images.dog.ceo/breeds/bulldog-english/mami.jpg",
-                                      status: "")
+    let animal: Bool
+    @State var url = URL(string: "")
+    @State var image = ""
     // MARK: Computed properties
     var body: some View {
-        AsyncImage(url: URL(string: dog.message)!,
-                   content: { downloadedImage in
-            downloadedImage
-                .resizable()
-                .scaledToFit()
-        },
-                   placeholder: {
-            ProgressView()
-        })
-            .task {
-                await newImage()
-            }
+        VStack {
+            AsyncImage(url: URL(string: image),
+                       content: { downloadedImage in
+                downloadedImage
+                    .resizable()
+                    .scaledToFit()
+            },
+                       placeholder: {
+                ProgressView()
+            })
+        }
+        .task {
+            url = URL(string: animal ? "https://dog.ceo/api/breeds/image/random" : "https://aws.random.cat/meow")
+            await newImage()
+        }
     }
     func newImage () async {
         // Define the type of data we want from the endpoint
         // Configure the request to the web site
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: url!)
         // Ask for JSON data
         request.setValue("application/json",
                          forHTTPHeaderField: "Accept")
@@ -51,8 +54,12 @@ struct DogImageView: View {
             //                                 DATA TYPE TO DECODE TO
             //                                         |
             //                                         V
-            dog = try JSONDecoder().decode(dogJSON.self, from: data)
-            print("Run")
+            if animal {
+                image = try JSONDecoder().decode(dogJSON.self, from: data).message
+            }
+            else {
+                image = try JSONDecoder().decode(catJSON.self, from: data).file
+            }
         } catch {
             print("Could not retrieve or decode the JSON from endpoint.")
             // Print the contents of the "error" constant that the do-catch block
@@ -61,8 +68,8 @@ struct DogImageView: View {
         }
     }
 }
-struct DogImageView_Previews: PreviewProvider {
+struct AnimalImageView_Previews: PreviewProvider {
     static var previews: some View {
-        DogImageView()
+        AnimalImageView(animal: false)
     }
 }

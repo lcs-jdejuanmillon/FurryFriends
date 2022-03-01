@@ -15,7 +15,7 @@
 		8134B14727CA4862004DEB85 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8134B14627CA4862004DEB85 /* ContentView.swift */; };
 		8134B14927CA4863004DEB85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8134B14827CA4863004DEB85 /* Assets.xcassets */; };
 		8134B14C27CA4863004DEB85 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8134B14B27CA4863004DEB85 /* Preview Assets.xcassets */; };
-		8134B15427CA55F4004DEB85 /* DogImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8134B15327CA55F4004DEB85 /* DogImageView.swift */; };
+		8134B15427CA55F4004DEB85 /* AnimalImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8134B15327CA55F4004DEB85 /* AnimalImageView.swift */; };
 		8134B15627CA575E004DEB85 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8134B15527CA575E004DEB85 /* README.md */; };
 /* End PBXBuildFile section */
 
@@ -29,7 +29,7 @@
 		8134B14627CA4862004DEB85 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8134B14827CA4863004DEB85 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8134B14B27CA4863004DEB85 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		8134B15327CA55F4004DEB85 /* DogImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogImageView.swift; sourceTree = "<group>"; };
+		8134B15327CA55F4004DEB85 /* AnimalImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalImageView.swift; sourceTree = "<group>"; };
 		8134B15527CA575E004DEB85 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -94,7 +94,7 @@
 		8134B15727CA5B63004DEB85 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				8134B15327CA55F4004DEB85 /* DogImageView.swift */,
+				8134B15327CA55F4004DEB85 /* AnimalImageView.swift */,
 				0DC745B427CE7DCB00AE0D86 /* CatImageView.swift */,
 				0D98A60827CD11E1003AD723 /* SharedFunctionsAndConstants.swift */,
 			);
@@ -176,7 +176,7 @@
 				0D98A60B27CD1729003AD723 /* VersusView.swift in Sources */,
 				8134B14727CA4862004DEB85 /* ContentView.swift in Sources */,
 				0D98A60427CD1025003AD723 /* AnimalView.swift in Sources */,
-				8134B15427CA55F4004DEB85 /* DogImageView.swift in Sources */,
+				8134B15427CA55F4004DEB85 /* AnimalImageView.swift in Sources */,
 				0DC745B527CE7DCB00AE0D86 /* CatImageView.swift in Sources */,
 				8134B14527CA4862004DEB85 /* FurryFriendsApp.swift in Sources */,
 			);

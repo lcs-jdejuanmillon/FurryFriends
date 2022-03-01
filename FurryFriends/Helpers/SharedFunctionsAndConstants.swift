@@ -13,12 +13,12 @@ func getDocumentsDirectory() -> URL {
 }
 
 struct dogJSON: Decodable, Encodable, Hashable {
-    let message: String
-    let status: String
+    var message: String
+    var status: String
 }
 
 struct catJSON: Decodable, Encodable, Hashable {
-    let file: String
+    var file: String
 }
 
 struct Favourite: Decodable, Encodable, Hashable {
