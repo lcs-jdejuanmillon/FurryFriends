@@ -21,7 +21,7 @@ struct ContentView: View {
         VStack {
             
             // Shows the main image
-            RemoteImageView(fromURL: currentImage)
+            // RemoteImageView(fromURL: currentImage)
             
             // Push main image to top of screen
             Spacer()

@@ -22,8 +22,8 @@ struct VersusView: View {
             VStack {
                 Text("Dogs Vs Cats")
                 HStack {
-                    RemoteImageView(fromURL: URL(string: remoteDogImage)!)
-                    RemoteImageView(fromURL: URL(string: remoteCatImage)!)
+                    // RemoteImageView(fromURL: URL(string: remoteDogImage)!)
+                    // RemoteImageView(fromURL: URL(string: remoteCatImage)!)
                 }
                 HStack {
                     Spacer()

@@ -13,11 +13,16 @@ struct FurryFriendsApp: App {
         WindowGroup {
             NavigationView {
                 TabView {
-                    ContentView()
+                    AnimalView(animal: true)
                         .tabItem {
+                            Image("DOG")
                             Text("Dogs")
                         }
-                    
+                    AnimalView(animal: false)
+                        .tabItem {
+                            Image("CAT")
+                            Text("Cats")
+                        }
                 }
             }
         }

@@ -32,7 +32,13 @@ struct AnimalView: View {
     var body: some View {
         ScrollView {
             VStack {
-                RemoteImageView(fromURL: currentImage)
+                // RemoteImageView(fromURL: currentImage)
+                ZStack {
+                    DogImageView()
+                        .opacity(animal ? 1 : 0)
+                    CatImageView()
+                        .opacity(animal ? 0 : 1)
+                }
                 HStack {
                     Button(action: {
                         print("Hola")
