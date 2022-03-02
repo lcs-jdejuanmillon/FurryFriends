@@ -18,6 +18,11 @@ struct FurryFriendsApp: App {
                             Image("DOG")
                             Text("Dogs")
                         }
+                    VersusView()
+                        .tabItem {
+                            Image(systemName: "heart.circle")
+                            Text("VS")
+                        }
                     AnimalView(animal: false)
                         .tabItem {
                             Image("CAT")

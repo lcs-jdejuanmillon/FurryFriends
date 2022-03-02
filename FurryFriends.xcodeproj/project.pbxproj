@@ -10,7 +10,7 @@
 		0D98A60427CD1025003AD723 /* AnimalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D98A60327CD1025003AD723 /* AnimalView.swift */; };
 		0D98A60927CD11E1003AD723 /* SharedFunctionsAndConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D98A60827CD11E1003AD723 /* SharedFunctionsAndConstants.swift */; };
 		0D98A60B27CD1729003AD723 /* VersusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D98A60A27CD1728003AD723 /* VersusView.swift */; };
-		0DF5209427CF04E400807A7A /* listView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF5209327CF04E400807A7A /* listView.swift */; };
+		0DE2328A27D0037000E2B17C /* HeartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE2328927D0037000E2B17C /* HeartView.swift */; };
 		8134B14527CA4862004DEB85 /* FurryFriendsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8134B14427CA4862004DEB85 /* FurryFriendsApp.swift */; };
 		8134B14927CA4863004DEB85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8134B14827CA4863004DEB85 /* Assets.xcassets */; };
 		8134B14C27CA4863004DEB85 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8134B14B27CA4863004DEB85 /* Preview Assets.xcassets */; };
@@ -21,7 +21,7 @@
 		0D98A60327CD1025003AD723 /* AnimalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalView.swift; sourceTree = "<group>"; };
 		0D98A60827CD11E1003AD723 /* SharedFunctionsAndConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedFunctionsAndConstants.swift; sourceTree = "<group>"; };
 		0D98A60A27CD1728003AD723 /* VersusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VersusView.swift; sourceTree = "<group>"; };
-		0DF5209327CF04E400807A7A /* listView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listView.swift; sourceTree = "<group>"; };
+		0DE2328927D0037000E2B17C /* HeartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartView.swift; sourceTree = "<group>"; };
 		8134B14127CA4862004DEB85 /* FurryFriends.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FurryFriends.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8134B14427CA4862004DEB85 /* FurryFriendsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FurryFriendsApp.swift; sourceTree = "<group>"; };
 		8134B14827CA4863004DEB85 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -65,7 +65,6 @@
 				8134B15227CA55BC004DEB85 /* Views */,
 				8134B14827CA4863004DEB85 /* Assets.xcassets */,
 				8134B14A27CA4863004DEB85 /* Preview Content */,
-				0DF5209327CF04E400807A7A /* listView.swift */,
 			);
 			path = FurryFriends;
 			sourceTree = "<group>";
@@ -83,6 +82,7 @@
 			children = (
 				0D98A60327CD1025003AD723 /* AnimalView.swift */,
 				0D98A60A27CD1728003AD723 /* VersusView.swift */,
+				0DE2328927D0037000E2B17C /* HeartView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -168,8 +168,8 @@
 			files = (
 				0D98A60927CD11E1003AD723 /* SharedFunctionsAndConstants.swift in Sources */,
 				0D98A60B27CD1729003AD723 /* VersusView.swift in Sources */,
-				0DF5209427CF04E400807A7A /* listView.swift in Sources */,
 				0D98A60427CD1025003AD723 /* AnimalView.swift in Sources */,
+				0DE2328A27D0037000E2B17C /* HeartView.swift in Sources */,
 				8134B14527CA4862004DEB85 /* FurryFriendsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

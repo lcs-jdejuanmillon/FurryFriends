@@ -12,12 +12,12 @@ func getDocumentsDirectory() -> URL {
     return paths[0]
 }
 
-struct dogJSON: Decodable, Encodable, Hashable {
+struct dogJSON: Decodable {
     var message: String
     var status: String
 }
 
-struct catJSON: Decodable, Encodable, Hashable {
+struct catJSON: Decodable {
     var file: String
 }
 
@@ -28,12 +28,12 @@ struct Favourite: Decodable, Encodable, Hashable {
     var image: String
 }
 
-func newImage (url: URL, animal: Bool) async -> String  {
+func newImage (animal: Bool) async -> String  {
+    let url = animal ? URL(string: "https://dog.ceo/api/breeds/image/random")! : URL(string: "https://aws.random.cat/meow")!
     var request = URLRequest(url: url)
     // Ask for JSON data
     request.setValue("application/json",
                      forHTTPHeaderField: "Accept")
-    
     let urlSession = URLSession.shared
     do {
         
@@ -54,5 +54,40 @@ func newImage (url: URL, animal: Bool) async -> String  {
         // populates
         print(error)
         return "Something went wrong, hopefully it does not crash"
+    }
+}
+
+func persistFavourites(label: String, favourites: [Favourite]) {
+    let filename = getDocumentsDirectory().appendingPathComponent(label)
+    print(filename)
+    do {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+        let data = try encoder.encode(favourites)
+        try data.write(to: filename, options: [.atomicWrite, .completeFileProtection])
+        print("Saved data to the Documents directory successfully.")
+        print("==========")
+        print(String(data: data, encoding: .utf8)!)
+    } catch {
+        print("Unable to write list of favourites to the Documents directory")
+        print("===========")
+        print(error.localizedDescription)
+    }
+}
+
+func loadFavourites(label: String) -> [Favourite] {
+    let filename = getDocumentsDirectory().appendingPathComponent(label)
+    print(filename)
+    do {
+        let data = try Data(contentsOf: filename)
+        print("Saved data to the Documents directory successfully.")
+        print("==========")
+        print(String(data: data, encoding: .utf8)!)
+        return try JSONDecoder().decode([Favourite].self, from: data)
+    } catch {
+        print("Could not load the data from the stored JSON file")
+        print("========")
+        print(error.localizedDescription)
+        return []
     }
 }

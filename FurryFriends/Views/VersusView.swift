@@ -12,77 +12,106 @@ struct VersusView: View {
     // MARK: Stored properties
     // Address for main image
     // Starts as a transparent pixel – until an address for an animal's image is set
-    @State var currentCat = ""
-    @State var currentDog = ""
-    let remoteDogImage = "https://images.dog.ceo/breeds/labrador/lab_young.JPG"
-    let remoteCatImage = "https://purr.objects-us-east-1.dream.io/i/JJiYI.jpg"
+    @State var currentCat = Favourite(title: "", breed: "", notes: "", image: "")
+    @State var currentDog = Favourite(title: "", breed: "", notes: "", image: "")
+    @State var numbers = [0.0, 0.0]
+    @State var showDog = false
+    @State var showCat = false
+    @State var inDog = false
+    @State var inCat = false
     // MARK: Computed properties
+    var sum: Double {
+        return max(1, numbers[0] + numbers[1])
+    }
     var body: some View {
         VStack {
             Text("Dogs Vs Cats")
-            HStack {
-                AsyncImage(url: URL(string: currentAnimal.image),
-                           content: { downloadedImage in
-                    downloadedImage
-                        .resizable()
-                        .scaledToFit()
-                },
-                           placeholder: {
-                    ProgressView()
-                })
-                AsyncImage(url: URL(string: currentAnimal.image),
-                           content: { downloadedImage in
-                    downloadedImage
-                        .resizable()
-                        .scaledToFit()
-                },
-                           placeholder: {
-                    ProgressView()
-                })
-            }
-            HStack {
-                Spacer()
-                Image(systemName: "heart.circle")
-                    .resizable()
-                    .frame(width: 35, height: 35)
-                Spacer()
-                Button(action: {
-                    print("Hola")
-                },
-                       label: {
-                    Text("New")
-                })
-                    .buttonStyle(.bordered)
-                Spacer()
-                Image(systemName: "heart.circle")
-                    .resizable()
-                    .frame(width: 35, height: 35)
-                Spacer()
-            }
             Text("Tap on the animal you like the most")
             HStack {
                 Spacer()
-                Text("80%")
+                Text("\(String(format: "%.0f", numbers[0] / sum * 100))%")
                 Spacer()
                 Text("VS")
                 Spacer()
-                Text("20%")
+                Text("\(String(format: "%.0f", numbers[1] / sum * 100))%")
                 Spacer()
             }
+            .opacity(numbers[0] + numbers[1] == 0 ? 0 : 1)
+            HStack {
+                AsyncImage(url: URL(string: currentDog.image),
+                           content: { downloadedImage in
+                    downloadedImage
+                        .resizable()
+                        .scaledToFit()
+                },
+                           placeholder: {
+                    ProgressView()
+                })
+                    .onTapGesture {
+                        Task {
+                            numbers[0] += 1
+                            currentDog.image = await newImage(animal: true)
+                            currentCat.image = await newImage(animal: false)
+                        }
+                    }
+                AsyncImage(url: URL(string: currentCat.image),
+                           content: { downloadedImage in
+                    downloadedImage
+                        .resizable()
+                        .scaledToFit()
+                },
+                           placeholder: {
+                    ProgressView()
+                })
+                    .onTapGesture {
+                        Task {
+                            numbers[1] += 1
+                            currentDog.image = await newImage(animal: true)
+                            currentCat.image = await newImage(animal: false)
+                        }
+                    }
+                
+            }
+            HStack {
+                Spacer()
+                HeartView(showFavourites: $showDog,
+                          currentAnimal: $currentDog,
+                          inFavourites: $inDog,
+                          favourites: $favouritesDog)
+                Spacer()
+                Spacer()
+                Image(systemName: "heart.circle")
+                    .resizable()
+                    .frame(width: 35, height: 35)
+                Spacer()
+            }
+
             Spacer()
             
         }
         // Runs once when the app is opened
         .task {
-            
-            
-            // Replaces the transparent pixel image with an actual image of an animal
-            // Adjust according to your preference ☺️
-            currentImage = URL(string: remoteDogImage)!
+            currentDog.image = await newImage(animal: true)
+            currentCat.image = await newImage(animal: false)
         }
     }
     
     // MARK: Functions
+    func loadFavourites() {
+        let filename = getDocumentsDirectory().appendingPathComponent("numbers")
+        print(filename)
+        do {
+            let data = try Data(contentsOf: filename)
+            print("Saved data to the Documents directory successfully.")
+            print("==========")
+            print(String(data: data, encoding: .utf8)!)
+            numbers = try JSONDecoder().decode([Double].self, from: data)
+        } catch {
+            print("Could not load the data from the stored JSON file")
+            print("========")
+            print(error.localizedDescription)
+        }
+    }
     
 }
 
@@ -93,3 +122,6 @@ struct VersusView_Previews: PreviewProvider {
         }
     }
 }
+
+// Add extra to the JSON file or create an auxialiary second file
+
