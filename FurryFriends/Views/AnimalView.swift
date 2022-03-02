@@ -12,8 +12,9 @@ struct AnimalView: View {
     @Environment(\.scenePhase) var scenePhase
     let animal: Bool
     @State var favourites: [Favourite] = []
-    // Address for main image
-    // Starts as a transparent pixel – until an address for an animal's image is set
+    @State var showFavourites = false
+    @State var inFavourites = false
+    @State var currentAnimal = Favourite(title: "", breed: "", notes: "", image: "")
     // MARK: Computed properties
     var savedFavouritesLabel: String {
         if animal {
@@ -23,49 +24,111 @@ struct AnimalView: View {
     }
     var url: URL {
         if animal {
-            return URL(string: "https://images.dog.ceo/breeds/labrador/lab_young.JPG")!
+            return URL(string: "https://dog.ceo/api/breeds/image/random")!
         }
-        return URL(string: "https://images.dog.ceo/breeds/labrador/lab_young.JPG")!
+        return URL(string: "https://aws.random.cat/meow")!
     }
     var body: some View {
-        ScrollView {
-            VStack {
-                // RemoteImageView(fromURL: currentImage)
-                AnimalImageView(animal: animal)
-                    .onTapGesture {
-                        print(error)
-                    }
-                HStack {
+        VStack {
+            // RemoteImageView(fromURL: currentImage)
+            AsyncImage(url: URL(string: currentAnimal.image),
+                       content: { downloadedImage in
+                downloadedImage
+                    .resizable()
+                    .scaledToFit()
+            },
+                       placeholder: {
+                ProgressView()
+            })
+            HStack {
+                ZStack {
+                    Image(systemName: "heart.circle")
+                        .onTapGesture {
+                            showFavourites = true
+                        }
+                        .foregroundColor(.secondary)
+                        .opacity(showFavourites || inFavourites ? 0 : 1)
+                    Image(systemName: "heart.circle")
+                        .onTapGesture {
+                            currentAnimal.title = ""
+                            currentAnimal.breed = ""
+                            currentAnimal.notes = ""
+                            showFavourites = false
+                        }
+                        .foregroundColor(.red)
+                        .opacity(showFavourites || inFavourites ? 1 : 0)
+                }
+                ZStack {
                     Button(action: {
-                        print("Hola")
+                        favourites.append(currentAnimal)
+                        currentAnimal.title = ""
+                        currentAnimal.breed = ""
+                        currentAnimal.notes = ""
+                        showFavourites = false
+                        inFavourites = true
                     },
                            label: {
-                        Text("Add to Favourite")
+                        Text("Save")
                     })
                         .buttonStyle(.bordered)
+                        .opacity(showFavourites ? 1 : 0)
                     Button(action: {
-                        print("Hola")
+                        Task {
+                            currentAnimal.image = await newImage(url: url, animal: animal)
+                            inFavourites = false
+                        }
                     },
                            label: {
                         Text("Another one!")
                     })
                         .buttonStyle(.bordered)
+                        .opacity(showFavourites ? 0 : 1)
                 }
-                Spacer()
-                
             }
-            // Runs once when the app is opened
-            .task {
-                let remoteDogImage = "https://images.dog.ceo/breeds/labrador/lab_young.JPG"
-                
-                // Replaces the transparent pixel image with an actual image of an animal
-                // Adjust according to your preference ☺️
-                currentImage = URL(string: remoteDogImage)!
+            VStack {
+                TextField("Title", text: $currentAnimal.title)
+                TextField("Breed", text: $currentAnimal.breed)
+                TextField("Notes", text: $currentAnimal.notes)
+            }
+            .opacity(showFavourites ? 1 : 0)
+            List(favourites, id: \.self) { currentAnimal in
+                VStack {
+                    Text(currentAnimal.title)
+                        .minimumScaleFactor(0.5)
+                        .multilineTextAlignment(.center)
+                    HStack {
+                        Text("Breed:")
+                        Spacer()
+                        Text(currentAnimal.breed)
+                            .italic()
+                    }
+                    Text(currentAnimal.notes)
+                    AsyncImage(url: URL(string: currentAnimal.image),
+                               content: { downloadedImage in
+                        downloadedImage
+                            .resizable()
+                            .scaledToFit()
+                    },
+                               placeholder: {
+                        ProgressView()
+                    })
+
+                }
             }
         }
-        .navigationTitle("Dogs")
+        .padding()
+        .task {
+            currentAnimal.image = await newImage(url: url, animal: animal)
+            loadFavourites()
+        }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .background {
+                persistFavourites()
+            }
+        }
+        .navigationTitle(animal ? "Dogs" : "Cats")
+        .padding()
     }
-    
     // MARK: Functions
     func persistFavourites() {
         let filename = getDocumentsDirectory().appendingPathComponent(savedFavouritesLabel)
@@ -100,11 +163,10 @@ struct AnimalView: View {
         }
     }
 }
-
 struct AnimalView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            AnimalView(animal: false)
+            AnimalView(animal: true)
         }
     }
 }
